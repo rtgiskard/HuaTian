@@ -82,9 +82,11 @@
 % <<<1 xecjk 选项设置
 \xeCJKsetup { %⟨key 1 ⟩=⟨val 1 ⟩, ⟨key 2 ⟩=⟨val 2 ⟩, ...
 	xeCJKactive=true,		% 打开对中文的特殊处理
-	CJKspace=false,			% 是否支持数学环境中的 cjk 字符
-	xCJKecglue=false,		% 是否对源文件中直接输入的CJK 文字与西文之间的空格进行调整
+	CJKmath=true,			% 是否支持数学环境中的 cjk 字符
+	CJKspace=false,			% 忽略 cjk 文字之间的空格
+	xCJKecglue=false,		% 是否对源文件中直接输入的 cjk 文字与西文之间的空格进行调整
 	PunctStyle=quanjiao,	% 设置标点处理格式
+	AutoFallBack=true,		% 自动启用备用字体
 	AutoFakeBold=true,		% 全局设定当没有声明对应的粗体时,是否使用 伪粗体
 	AutoFakeSlant=true,		% 全局设定当没有声明对应的斜体时,是否使用 伪斜体
 	%EmboldenFactor=4,		% 设置伪粗体的默认粗细程度
@@ -101,7 +103,6 @@
 	% <<<2 设置字体
 	\rt_fonts_def[AutoFakeBold,AutoFakeSlant]%
 		{AR PL KaitiM GB}{AR PL SungtiL GB}{WenQuanYi Micro Hei}[][deff]
-	%	{AR PL New Kai}{AR PL New Sung}{WenQuanYi Micro Hei}[][]
 
 	% <<<2 页面布局及留白
 	%\geometry{left=2.8cm,right=2.8cm,top=4cm,bottom=4.2cm}		% 页边距
