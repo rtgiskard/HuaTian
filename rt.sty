@@ -12,7 +12,7 @@
 \usepackage{xeCJK}										% 中文基本环境
 \usepackage[UTF8,fontset=none,heading=true]{ctex}		% ctex 中文宏包，定义中文风格
 \usepackage{multicol}									% 分栏
-%\usepackage{fancyhdr}									% 页眉页脚
+\usepackage{fancyhdr}									% 页眉页脚
 \usepackage{titlesec}									% 章节目录样式
 \usepackage{ifthen,ifthenx}								% 条件判断，方便定义
 %\usepackage{syntonly,showframe}						% 检查语法，显示页面布局（诊断）
@@ -104,11 +104,23 @@
 	\rt_fonts_def[AutoFakeBold,AutoFakeSlant]%
 		{AR PL KaitiM GB}{AR PL SungtiL GB}{WenQuanYi Micro Hei}[][deff]
 
-	% <<<2 页面布局及留白
+	% <<<2 页面布局及留白, 参考 geometry 和 fancyhdr 文档
 	%\geometry{left=2.8cm,right=2.8cm,top=4cm,bottom=4.2cm}		% 页边距
 	%\linespread{1.2}											% 单倍行距
 	%\setlength{\baselineskip}{1.2\baselineskip}				% 改变行距的正确姿势
 	%\setlength{\parskip}{1ex plus 1ex minus 0ex}				% 段间距, 0.8 - 1.4 ex 自动
+	%\setlength{\voffset}{-1em}
+	%\setlength{\headsep}{2em}									% 页眉与正文间距
+
+	% <<<2 页眉页脚
+	\fancypagestyle{plain}{										% 重定义 plain 风格
+		\fancyhf{}												% 清空所有
+		\renewcommand{\headrulewidth}{0pt}
+		\renewcommand{\footrulewidth}{0pt}
+		\rfoot{\small \thepage}
+		% \lhead{} \rhead{} \lfoot{} \cfoot{} \rfoot{}
+		% \fancyfoot[RE,RO]{\small \thepage}					% 依赖 twoside 选项
+	}
 
 	% <<<2 脚注
 	\renewcommand{\thefootnote}{\roman{footnote}}
