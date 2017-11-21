@@ -133,8 +133,7 @@
 \newenvironment{longpoem}[3]{ %<<<3 词
 	\begingroup \setlength{\intextsep}{0ex}
 	\begin{figure}[H]
-	%\begin{minipage}[t][][c]{\columnwidth}
-	\setlength\parindent{2\ccwd}				% 设置缩进
+	\setlength\parindent{0\ccwd}				% 设置缩进
 	\setlength{\parskip}{0ex}					% 取消段间距，注意标题与作者间距
 	\ifthenelse{\equal{#1}{}}{}{				% 无题
 		\poem{#1} \poet{#2}{#3} \vspace{0.4ex}
@@ -143,10 +142,10 @@
 	\setlength{\parskip}{1ex plus 1ex minus 0ex}
 
 	\vspace{1ex}								% 环境前水平留白
-	\indentenv{4\ccwd}{4\ccwd}{\small}
+	\setlength\leftskip{4\ccwd}					% 左缩进
+	\setlength\rightskip{4\ccwd}				% 右缩进
+	\small
 }{
-	\endindentenv
-	%\end{minipage}
 	\end{figure}
 	\endgroup
 }
