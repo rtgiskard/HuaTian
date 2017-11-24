@@ -2,7 +2,7 @@
 # xetex
 
 src ?= 花田半亩.tex
-circle ?= 2
+circle ?= 4
 oft ?= pdf
 src_misc := $(wildcard *.tex *.sty *.bib *.bst)
 src_misc := $(subst ${src},,${src_misc})
