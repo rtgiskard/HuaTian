@@ -1,0 +1,209 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{rt}
+
+\load_rt_style
+
+% <<<1 页面留白
+\newcommand{\blankrev}[1]{
+	\ifthenelse{\equal{#1}{}}{ \vspace{1ex}
+	}{ \ifthenelse{\equal{#1}{1}}{ \vspace{1em} }{ \vspace{2em}	}
+	}
+}
+
+% <<<1 封面
+\newcommand{\mytitlepage}[1]{
+
+	\thispagestyle{empty}
+
+	\ifthenelse{ \equal{none}{#1} }{ %<<<2 简短，同目录页
+		\title{花田半亩}
+		\author{田维}
+		\date{}
+		\maketitle
+	}{
+		\begin{center}
+
+		\ifthenelse{ \equal{simple}{#1} }{ %<<<2 简化版
+			% 位于页首的 vspace 需要用 * 强制
+			\vspace*{64pt}
+			\begin{minipage}[c][][t]{72pt}
+				\fontsize{72pt}{72pt}\selectfont
+				花田半亩
+			\end{minipage}
+		}{ %<<<2 详细版
+			%\fbox{
+			\setlength{\unitlength}{1pt}
+			\begin{picture}(200,520)(10,28)
+				\put(72,428){ %\fbox{
+					\begin{minipage}[t][][s]{72pt}
+						\fontsize{72pt}{72pt}\selectfont
+						花田半亩
+					\end{minipage}
+				} %}
+				\put(148,200){ %\fbox{
+					\begin{minipage}[t][][s]{34pt}
+						\fontsize{34pt}{34pt}\selectfont
+						田维
+					\end{minipage}
+				} %}
+				\put(148,72){ %\fbox{
+					\fontsize{14pt}{14pt}\selectfont
+					「文集整理」
+				} %}
+			\end{picture} %}
+		}
+		\end{center}
+
+		% 换页，页码重置
+		\clearpage \setcounter{page}{1}
+	} % 2>>>
+}
+
+% <<<1 自定义章节命令
+\newcommand{\newsect}[1]{
+	\begingroup \clearpage
+	\par \vspace{2.8em}
+	\LARGE\bfseries\centering #1
+	\phantomsection \addcontentsline{toc}{section}{#1}
+	\par \endgroup %\vspace{2ex}
+}
+
+% <<<1 定义诗文
+\newcommand{\poem}[1]{
+	\begingroup \par \vspace{2em}
+	%\large \centering \bfseries #1
+	\large \centering #1
+	\phantomsection \addcontentsline{toc}{subsection}{#1}
+	\par \endgroup
+}
+\newcommand{\poet}[2]{
+	\begingroup \par
+	\centering \small #1
+	\ifthenelse{\equal{#2}{}}{}{\footnotesize(#2)}
+	\par \endgroup
+}
+\newcommand{\subpart}[1]{
+	\begingroup \par
+	\vspace{2ex} \centering \textbf{#1}
+	\par \endgroup \nopagebreak[4]
+}
+
+% <<<1 env for indent, 缩进环境
+\newenvironment{indentenv}[3]{
+	\begingroup\par
+	\list{}{
+		\setlength\parindent{0\ccwd}			% 段落缩进
+		\setlength\listparindent{0\ccwd}		% 每项的悬挂缩进值
+		\setlength\itemindent{\listparindent}	% 每项标签前缩进
+		\setlength\leftmargin{#1}				% 左边缩进
+		\setlength\rightmargin{#2}				% 右边缩进
+		%\vspace{1ex}							% 环境前水平留白
+		\setlength\topsep{0ex}					% 环境后水平留白
+		\setlength\parsep{1ex}					% 段落间距
+		%\linespread{1.1}						% 行间距，1.1倍
+		\setlength{\baselineskip}{1.1\baselineskip}	% 行间距，1.1 倍
+	}\item[]#3\ignorespaces
+}{ \par\endlist\endgroup }
+
+% <<<1 env for poem，诗词文环境
+\newenvironment{shortpoem}[3]{ %<<<2 诗
+	\vspace{1em}
+	\begingroup \setlength{\intextsep}{0ex}
+	\begin{figure}[H]
+	%\begin{minipage}[t][][c]{\columnwidth}
+	\setlength\parindent{0ex}					% 设置缩进
+	\setlength{\parskip}{0ex}					% 取消段间距，注意标题与作者间距
+	\ifthenelse{\equal{#1}{}}{}{				% 无题
+		\poem{#1} \poet{#2}{#3} \vspace{0.4ex}
+	} \centering \small
+	%\setlength{\baselineskip}{1.2\baselineskip}	% 调整行距，作用于环境，不必考虑后续影响
+	\setlength{\parskip}{1ex plus 1ex minus 0ex}
+}{
+	%\end{minipage}
+	\end{figure}
+	\par\endgroup\vspace{1em}
+}
+
+\newenvironment{longpoem}[3]{ %<<<2 词
+	\begingroup \setlength{\intextsep}{0ex}
+	%\begin{figure}[H]
+	\setlength\parindent{0\ccwd}				% 设置缩进
+	\setlength{\parskip}{0ex}					% 取消段间距，注意标题与作者间距
+	\ifthenelse{\equal{#1}{}}{}{				% 无题
+		\poem{#1} \poet{#2}{#3} \vspace{0.4ex}
+	}
+	%\setlength{\baselineskip}{1.2\baselineskip}
+	\setlength{\parskip}{1em plus 1ex minus 1ex}
+
+	\setlength\leftskip{4\ccwd}					% 左缩进
+	\setlength\rightskip{4\ccwd}				% 右缩进
+	\small
+}{
+	%\end{figure}
+	\par\endgroup\vspace{1ex}
+}
+
+\newenvironment{writing}[2]{ %<<<2 文
+	\vspace{2em} \begingroup
+	\setlength{\parskip}{0ex}					% 取消段间距，注意标题与作者间距
+	\setlength{\intextsep}{0ex}					% 防止浮动体间距太大
+
+	\poem{#1} \nopagebreak[4]
+	\ifthenelse{\equal{#2}{}}{}{
+		\begingroup \par \centering \footnotesize #2 \par \endgroup
+	} \nopagebreak[4] \vspace{1ex} \nopagebreak[4]
+
+	%\setlength{\baselineskip}{1.2\baselineskip}
+	\setlength{\parskip}{1ex plus 1ex minus 0ex}
+}{ \par\endgroup\vspace{2ex} }
+
+\newenvironment{poempreamble}{ %<<<2 序
+	\begingroup
+	% also refer to: `texdoc source2e'
+	\list{}{
+		\setlength\parindent{2\ccwd}			% 段落缩进
+		\setlength\listparindent{\parindent}	% 每项的悬挂缩进值
+		\setlength\itemindent{\listparindent}	% 每项标签前缩进
+		\setlength\leftmargin{\parindent}		% 左边缩进
+		\setlength\rightmargin{\leftmargin}		% 右边缩进
+		\vspace{0.4ex}							% 环境前水平留白
+		\setlength\topsep{1ex}					% 环境后水平留白
+		\setlength\parsep{0.4ex}				% 段落间距
+		\linespread{1}							% 行间距，1倍
+		\small
+	}\item[]\noindent\ignorespaces
+}{ \par\endlist\endgroup }
+% 2>>>
+
+% <<<1 hyperref
+\hypersetup{
+	pdftitle={花田半亩},
+	pdfauthor={田维},
+	colorlinks=true,
+	bookmarksdepth=3,
+	bookmarksnumbered=false,
+}
+% >>>
+
+\begin{document}
+	% 封页
+	\pagestyle{empty} \pagenumbering{Roman}
+	\mytitlepage{detail}
+
+	% 目录
+	\pagestyle{headings} \pagenumbering{roman}
+	\pdfbookmark[1]{目录}{\thepage}
+	\tableofcontents
+	\clearpage
+
+	\pagestyle{plain} \pagenumbering{arabic}
+	\setlength{\parskip}{1ex plus 1ex minus 0ex}
+
+	% 正文
+	\input{01_writing.tex}
+
+\end{document}
+
+
+% vi: set ft=tex ts=4 sts=4 textwidth=94 iskeyword+=_ formatoptions+=2mM :
+% vi: set foldmethod=marker foldmarker=<<<,>>> autoindent readonly :

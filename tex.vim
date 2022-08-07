@@ -40,15 +40,13 @@ endfunction
 command! -complete=customlist,Dort_opts -nargs=* Dxrt :call <SID>Tex_todo_rt(<f-args>)
 command! Dx  :Dxrt
 command! Dxv :Dxrt view
-command! Dxr :Dxrt refresh
 command! Dxc :Dxrt clean
 command! DxC :Dxrt clobber
-command! Dxb :Dxrt backup
 " or more complicated options like `make circle=1 BIBTEX=biber' and etc..
 
 " completion
 function! Dort_opts(ArgLead, CmdLine, CursorPos)
-	return split("view refresh quiet clean clobber latexmk backup backup_more"," ")
+	return split("view clean clobber"," ")
 endfunction
 
 " '.' is used as a delimeter, especialy in `let' expr, space is ignored
