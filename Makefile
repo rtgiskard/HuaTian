@@ -2,17 +2,28 @@
 
 name := 花田半亩
 src_main ?= 00_main.tex
+src_body := 01_writing.tex
 src_all := $(wildcard *.tex *.sty *.bib *.bst)
 src_all += Makefile tex.vim
 
+txt_tool := tool/convert_txt.sh
+
 out_dir := ./out
 out := ${out_dir}/${name}.pdf
+out_txt := ${out_dir}/${name}.txt
 
 VIEWER := $(shell which evince)
+
+pdf: ${out}
+txt: ${out_txt}
 
 ${out}: ${src} ${src_all}
 	@ [ -d ${out_dir} ] || mkdir -p ${out_dir}
 	@ latexmk -xelatex -time -outdir=${out_dir} -jobname=${name} ${src_main}
+
+${out_txt}: ${src_body} ${txt_tool}
+	@ [ -d ${out_dir} ] || mkdir -p ${out_dir}
+	@ ${txt_tool} "$<" > "$@" && echo "-> $@"
 
 .PHONY: view clean clobber
 view: ${out}
