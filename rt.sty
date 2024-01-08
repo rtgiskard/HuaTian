@@ -32,10 +32,10 @@
 }
 
 % 关闭下划线的数学用法，方便使用我的命名风格
-\mathsub[off]
+%\mathsub[off]
 
 % <<<1 字体
-\def \set_fonts[#1]#2#3{
+\def \setFonts[#1]#2#3{
 
 	% 默认，等宽，无衬线
 
@@ -52,13 +52,12 @@
 	%	Inconsolata
 }
 
-\def \set_fonts_cjk_fallback[#1]{
+\def \setFontsCJK{
+	% CJK 备用字体
 	\setCJKfallbackfamilyfont{\CJKrmdefault}[AutoFakeBold,AutoFakeSlant]{
 		{WenQuanYi Micro Hei}, {Noto Color Emoji}
 	}
-}
 
-\def \set_fonts_cjk_name{
 	% 定义新的字体族并赋名
 	\newCJKfontfamily[zhkai]\kaiti{AR PL KaitiM GB}				% arphicfonts, 楷体
 	\newCJKfontfamily[zhsong]\songti{AR PL SungtiL GB}			% arphicfonts, 宋体
@@ -89,12 +88,12 @@
 }
 
 % <<<1 我的个性化设置
-\def \load_rt_style{
+\def \loadMyStyle{
 	\typeout{ ******** using rt style (｡･ω･)ﾉﾞ ******** }
 
 	% 字体
-	\set_fonts[]{LXGW WenKai}{LXGW WenKai Mono}
-	%\set_fonts[AutoFakeBold,AutoFakeSlant]{..}{..}
+	\setFonts[]{LXGW WenKai}{LXGW WenKai Mono}
+	%\setFonts[AutoFakeBold,AutoFakeSlant]{..}{..}
 
 	% 页面布局及留白, 参考 geometry 和 fancyhdr 文档
 	\geometry{left=2.4cm,right=2.4cm,top=2.8cm,bottom=2.8cm}	% 页边距
