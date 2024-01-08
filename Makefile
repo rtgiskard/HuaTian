@@ -4,7 +4,6 @@ name := 花田半亩
 src_main ?= 00_main.tex
 src_body := 01_writing.tex
 src_all := $(wildcard *.tex *.sty *.bib *.bst)
-src_all += Makefile tex.vim
 
 txt_tool := tool/convert_txt.sh
 
