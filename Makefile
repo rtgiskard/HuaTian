@@ -1,32 +1,32 @@
 #!/usr/bin/make -nf
 
 name := 花田半亩
-src_main ?= 00_main.tex
-src_body := 01_writing.tex
-src_all := $(wildcard *.tex *.sty *.bib *.bst)
+src_main ?= main.tex
+src_misc := $(wildcard src/*.tex src/*.sty)
 
+src_text := src/01_writing.tex
 txt_tool := tool/convert_txt.sh
 
 out_dir := ./out
-out := ${out_dir}/${name}.pdf
+out_pdf := ${out_dir}/${name}.pdf
 out_txt := ${out_dir}/${name}.txt
 
 VIEWER := $(shell which evince)
 
-pdf: ${out}
+pdf: ${out_pdf}
 txt: ${out_txt}
 
-${out}: ${src} ${src_all}
+${out_pdf}: ${src_main} ${src_misc}
 	@ [ -d ${out_dir} ] || mkdir -p ${out_dir}
-	@ latexmk -xelatex -time -outdir=${out_dir} -jobname=${name} ${src_main}
+	@ latexmk -xelatex -time -outdir=${out_dir} -jobname=${name} "$<"
 
-${out_txt}: ${src_body} ${txt_tool}
+${out_txt}: ${src_text} ${txt_tool}
 	@ [ -d ${out_dir} ] || mkdir -p ${out_dir}
 	@ ${txt_tool} "$<" > "$@" && echo "-> $@"
 
 .PHONY: view clean clobber
-view: ${out}
-	@ ${VIEWER} ${out} >/dev/null 2>&1 &
+view: ${out_pdf}
+	@ ${VIEWER} ${out_pdf} >/dev/null 2>&1 &
 
 clean:
 	@- rm -fv ${out_dir}/*.aux

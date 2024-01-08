@@ -1,58 +1,3 @@
-\documentclass[12pt,a4paper]{article}
-\usepackage{rt}
-
-\loadMyStyle
-
-
-% <<<1 封面
-\newcommand{\mytitlepage}[1]{
-
-	\thispagestyle{empty}
-
-	\ifthenelse{ \equal{none}{#1} }{ %<<<2 简短，同目录页
-		\title{花田半亩}
-		\author{田维}
-		\date{}
-		\maketitle
-	}{
-		\begin{center}
-
-		\ifthenelse{ \equal{simple}{#1} }{ %<<<2 简化版
-			% 位于页首的 vspace 需要用 * 强制
-			\vspace*{64pt}
-			\begin{minipage}[c][][t]{72pt}
-				\fontsize{72pt}{72pt}\selectfont
-				花田半亩
-			\end{minipage}
-		}{ %<<<2 详细版
-			%\fbox{
-			\setlength{\unitlength}{1pt}
-			\begin{picture}(200,520)(10,28)
-				\put(72,428){ %\fbox{
-					\begin{minipage}[t][][s]{72pt}
-						\fontsize{72pt}{72pt}\selectfont
-						花田半亩
-					\end{minipage}
-				} %}
-				\put(148,200){ %\fbox{
-					\begin{minipage}[t][][s]{34pt}
-						\fontsize{34pt}{34pt}\selectfont
-						田维
-					\end{minipage}
-				} %}
-				\put(148,72){ %\fbox{
-					\fontsize{14pt}{14pt}\selectfont
-					「文集整理」
-				} %}
-			\end{picture} %}
-		}
-		\end{center}
-
-		% 换页，页码重置
-		\clearpage \setcounter{page}{1}
-	} % 2>>>
-}
-
 % <<<1 自定义章节命令
 \newcommand{\newsect}[1]{
 	\begingroup \clearpage
@@ -169,35 +114,54 @@
 }{ \par\endlist\endgroup }
 % 2>>>
 
-% <<<1 hyperref
-\hypersetup{
-	pdftitle={花田半亩},
-	pdfauthor={田维},
-	colorlinks=true,
-	bookmarksdepth=3,
-	bookmarksnumbered=false,
+% <<<1 封面
+\newcommand{\mytitlepage}[1]{
+	\thispagestyle{empty}
+
+	\ifthenelse{ \equal{none}{#1} }{ %<<<2 简短，同目录页
+		\title{花田半亩}
+		\author{田维}
+		\date{}
+		\maketitle
+	}{
+		\begin{center}
+
+		\ifthenelse{ \equal{simple}{#1} }{ %<<<2 简化版
+			% 位于页首的 vspace 需要用 * 强制
+			\vspace*{64pt}
+			\begin{minipage}[c][][t]{72pt}
+				\fontsize{72pt}{72pt}\selectfont
+				花田半亩
+			\end{minipage}
+		}{ %<<<2 详细版
+			%\fbox{
+			\setlength{\unitlength}{1pt}
+			\begin{picture}(200,520)(10,28)
+				\put(72,428){ %\fbox{
+					\begin{minipage}[t][][s]{72pt}
+						\fontsize{72pt}{72pt}\selectfont
+						花田半亩
+					\end{minipage}
+				} %}
+				\put(148,200){ %\fbox{
+					\begin{minipage}[t][][s]{34pt}
+						\fontsize{34pt}{34pt}\selectfont
+						田维
+					\end{minipage}
+				} %}
+				\put(148,72){ %\fbox{
+					\fontsize{14pt}{14pt}\selectfont
+					「文集整理」
+				} %}
+			\end{picture} %}
+		}
+		\end{center}
+
+		% 换页，页码重置
+		\clearpage \setcounter{page}{1}
+	} % 2>>>
 }
 % >>>
 
-\begin{document}
-	% 封页
-	\pagestyle{empty} \pagenumbering{Roman}
-	\mytitlepage{detail}
 
-	% 目录
-	\pagestyle{headings} \pagenumbering{roman}
-	\pdfbookmark[1]{目录}{\thepage}
-	\tableofcontents
-	\clearpage
-
-	\pagestyle{plain} \pagenumbering{arabic}
-	\setlength{\parskip}{1ex plus 1ex minus 0ex}
-
-	% 正文
-	\input{01_writing.tex}
-
-\end{document}
-
-
-% vi: set ft=tex ts=4 sts=4 textwidth=94 iskeyword+=_ formatoptions+=2mM :
-% vi: set foldmethod=marker foldmarker=<<<,>>> autoindent readonly :
+% vi: set ts=4 textwidth=94 formatoptions+=2mM foldmethod=marker foldmarker=<<<,>>> :
